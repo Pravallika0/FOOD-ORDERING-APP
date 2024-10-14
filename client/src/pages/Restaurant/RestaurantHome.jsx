@@ -12,7 +12,7 @@ const RestaurantHome = () => {
 
   useEffect(()=>{
       fetchUserData();
-  },[])
+  },[fetchUserData])
  
   const fetchUserData = async () =>{
     await axios.get(`http://localhost:6001/fetch-user-details/${userId}`).then(
@@ -29,7 +29,7 @@ const RestaurantHome = () => {
 
   useEffect(()=>{
     fetchRestaurantData();
-  }, [])
+  }, [fetchUserData])
 
 
 
