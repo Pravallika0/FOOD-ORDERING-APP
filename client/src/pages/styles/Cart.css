@@ -31,10 +31,7 @@
     border-radius: 0.6rem;
 }
 
-.cartItem-data{
 
-
-}
 
 .cartItem-data h4{
     font-size: 1.1rem;
@@ -49,10 +46,7 @@
     color: #7b828a;
 }
 
-.cartItem-data span{
 
-    
-}
 
 .cartItem-data span h5{
     font-size: 0.9rem;
@@ -78,9 +72,7 @@
     align-items: center;
 }
 
-.cartItem-inputs span{
 
-}
 
 .cartItem-inputs span p{
  display: flex;   
@@ -88,9 +80,7 @@
  margin: 0;
 }
 
-.cartItem-inputs span p b{
-    
-}
+
 
 .cartItem-inputs div{
     /* width: 20vw; */

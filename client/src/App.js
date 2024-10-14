@@ -14,11 +14,11 @@ import AllUsers from './pages/admin/AllUsers';
 import AllOrders from './pages/admin/AllOrders';
 import AllRestaurants from './pages/admin/AllRestaurants';
 
-import RestaurantHome from './pages/restaurant/RestaurantHome'
-import RestaurantOrders from './pages/restaurant/RestaurantOrders'
-import RestaurantMenu from './pages/restaurant/RestaurantMenu'
-import NewProduct from './pages/restaurant/NewProduct';
-import EditProduct from './pages/restaurant/EditProduct'
+import RestaurantHome from './pages/Restaurant/RestaurantHome'
+import RestaurantOrders from './pages/Restaurant/RestaurantOrders'
+import RestaurantMenu from './pages/Restaurant/RestaurantMenu'
+import NewProduct from './pages/Restaurant/NewProduct';
+import EditProduct from './pages/Restaurant/EditProduct'
 
 function App() {
   return (
