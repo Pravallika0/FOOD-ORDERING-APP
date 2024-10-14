@@ -1,3 +1,4 @@
+import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar'
@@ -35,7 +36,7 @@ function App() {
         <Route path='/restaurant/:id' element={<IndividualRestaurant />} />
         <Route path='/category/:category' element={<CategoryProducts />} />
         <Route path='/profile' element={<Profile />} />
-        <Route path='/auth' element={<Authentication />} />
+        
 
         <Route path='/admin' element={<Admin />} />
         <Route path='/all-restaurants' element={<AllRestaurants />} />
