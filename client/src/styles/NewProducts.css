@@ -1,4 +1,4 @@
-.new-product-page{
+.new-product-page {
     background-color: #30373f;
     height: 100vh;
     width: 100%;
@@ -6,8 +6,7 @@
     padding-bottom: 4vh;
 }
 
-.new-product-container{
-
+.new-product-container {
     background-color: #181818;
     padding: 3vh 2vw;
     width: 54vw;
@@ -15,95 +14,86 @@
     border-radius: 0.6rem;
 }
 
-.new-product-container h3{
-
+.new-product-container h3 {
     text-align: center;
     color: aliceblue;
     margin-bottom: 3vh;
 }
 
-.new-product-container button{
-
+.new-product-container button {
     width: 50%;
     margin-left: 25%;
 }
 
-.new-product-body{
+.new-product-body {
     height: 60vh;
     overflow-y: scroll;
     padding: 2vh 1.5vw;
     margin-bottom: 2vh;
 }
 
-.new-product-body span{
+.new-product-body span {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* This is fine */
 }
 
-.new-product-body span .span-21 input{
+.new-product-body span .span-21 input {
     width: 20vw;
 }
-.new-product-body span .span-22 input{
+
+.new-product-body span .span-22 input {
     width: 25vw;
 }
 
-.new-product-body span .span-21 input{
-    width: 20vw;
-}
-.new-product-body span .span-22 input{
-    width: 25vw;
-}
-
-.new-product-body span .span-3 input{
-    width: 14.7vw;
-}
-.new-product-body span .span-3 select{
+.new-product-body span .span-3 input {
     width: 14.7vw;
 }
 
-.new-product-body input{
+.new-product-body span .span-3 select {
+    width: 14.7vw;
+}
+
+.new-product-body input {
     background-color: #30373f25;
     border-color: #67646489;
     color: aliceblue;
 }
-.new-product-body input:focus{
+
+.new-product-body input:focus {
     outline: none;
     background-color: #30373f25;
     border-color: #67646489;
     color: aliceblue;
 }
-.new-product-body label{
+
+.new-product-body label {
     color: rgba(240, 248, 255, 0.84);
 }
 
-.new-product-body span select{
-
+.new-product-body span select {
     background-color: #30373f25;
     border-color: #67646489;
     color: aliceblue;
 }
-.new-product-body span option{
 
+.new-product-body span option {
     color: rgb(6, 21, 33);
 }
 
-.new-product-body section{
+.new-product-body section {
     margin: 3vh 0;
-
 }
 
-.new-product-body section h4{
+.new-product-body section h4 {
     color: aliceblue;
-
 }
 
-.new-product-body section span{
+.new-product-body section span {
     display: flex;
-    justify-content: start;
+    justify-content: flex-start; /* Changed from start to flex-start */
     gap: 30px;
 }
 
-.new-product-body section span label{
-
+.new-product-body section span label {
     color: rgba(240, 248, 255, 0.658);
 }

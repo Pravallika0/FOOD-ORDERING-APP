@@ -16,7 +16,7 @@ const PopularRestaurants = () => {
       }, [])
 
     const fetchRestaurants = async() =>{
-        await axios.get('http://localhost:6001/fetch-restaurants').then(
+        await axios.get('http://localhost:3007/fetch-restaurants').then(
           (response)=>{
             setRestaurants(response.data);
           }
@@ -24,7 +24,7 @@ const PopularRestaurants = () => {
       }
 
       const fetchPromotions = async () =>{
-        await axios.get('http://localhost:6001/fetch-promoted-list').then(
+        await axios.get('http://localhost:3007/fetch-promoted-list').then(
           (response)=>{
             setPromoteList(response.data);
           }

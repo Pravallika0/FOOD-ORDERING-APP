@@ -1,112 +1,105 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react';
 import '../../styles/RestaurantHome.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const RestaurantHome = () => {
+    const navigate = useNavigate();
+    const userId = localStorage.getItem('userId');
 
-  const navigate = useNavigate();
-  const userId = localStorage.getItem('userId');
+    const [restaurant, setRestaurant] = useState('pending');
+    const [ItemsCount, setItemsCount] = useState(0);
+    const [ordersCount, setOrdersCount] = useState(0);
+    const [restaurantData, setRestaurantData] = useState();
 
-  const [restaurant, setRestaurant] = useState('pending');
+    const fetchUserData = useCallback(async () => {
+        try {
+            const response = await axios.get(`http://localhost:6001/fetch-user-details/${userId}`);
+            setRestaurant(response.data);
+            console.log(response.data._id);
+        } catch (error) {
+            console.error("Error fetching user data:", error);
+        }
+    }, [userId]);
 
-  useEffect(()=>{
-      fetchUserData();
-  },[fetchUserData])
- 
-  const fetchUserData = async () =>{
-    await axios.get(`http://localhost:6001/fetch-user-details/${userId}`).then(
-      (response) =>{
-        setRestaurant(response.data);
-        console.log(response.data._id);
-      }
-    )
-  }
+    const fetchRestaurantData = useCallback(async () => {
+        try {
+            const response = await axios.get(`http://localhost:6001/fetch-restaurant-details/${userId}`);
+            setRestaurantData(response.data);
+            console.log(response.data);
+        } catch (error) {
+            console.error("Error fetching restaurant data:", error);
+        }
+    }, [userId]);
 
-  const [ItemsCount, setItemsCount] = useState(0);
-  const [ordersCount, setOrdersCount] = useState(0);
-  const [restaurantData, setRestaurantData] = useState();
+    const fetchItems = useCallback(async () => {
+        try {
+            const response = await axios.get('http://localhost:6001/fetch-items');
+            setItemsCount(response.data.filter(item => item.restaurantId === restaurantData?._id).length);
+        } catch (error) {
+            console.error("Error fetching items:", error);
+        }
+    }, [restaurantData]);
 
-  useEffect(()=>{
-    fetchRestaurantData();
-  }, [fetchUserData])
+    const fetchOrders = useCallback(async () => {
+        try {
+            const response = await axios.get('http://localhost:6001/fetch-orders');
+            setOrdersCount(response.data.filter(item => item.restaurantId === restaurantData?._id).length);
+        } catch (error) {
+            console.error("Error fetching orders:", error);
+        }
+    }, [restaurantData]);
 
+    // Corrected useEffect to include fetchRestaurantData
+    useEffect(() => {
+        fetchUserData();
+    }, [fetchUserData]);
 
+    useEffect(() => {
+        fetchRestaurantData();
+    }, [fetchRestaurantData]); // Change made here to include fetchRestaurantData
 
-  const fetchRestaurantData = async () =>{
-    await axios.get(`http://localhost:6001/fetch-restaurant-details/${userId}`).then(
-      (response) =>{
-        setRestaurantData(response.data);
-        console.log(response.data)
-      }
-    )
-  }
+    useEffect(() => {
+        if (restaurantData) {
+            fetchItems();
+            fetchOrders();
+        }
+    }, [restaurantData, fetchItems, fetchOrders]);
 
-  useEffect(()=>{
-    if(restaurantData){
-      fetchItems();
-      fetchOrders();
-    }
-  },[restaurantData])
-
-  const fetchItems = async() =>{
-    await axios.get('http://localhost:6001/fetch-items').then(
-      (response)=>{
-        setItemsCount(response.data.filter(item=> item.restaurantId === restaurantData._id).length);
-
-      }
-    )
-  }
-
-  const fetchOrders = async() =>{
-    await axios.get('http://localhost:6001/fetch-orders').then(
-      (response)=>{
-        setOrdersCount(response.data.filter(item=> item.restaurantId === restaurantData._id).length);
-      }
-    )
-  }
-
-  return (
-    <div className="restaurantHome-page">
-
-      {restaurant.approval === 'pending' ?
-      
-        <div className="restaurant-approval-required">
-          <h3>Approval required!!</h3>
-          <p>You need to get approval from the admin to make this work. Please be patient!!!</p>
+    return (
+        <div className="restaurantHome-page">
+            {restaurant.approval === 'pending' ? (
+                <div className="restaurant-approval-required">
+                    <h3>Approval required!!</h3>
+                    <p>You need to get approval from the admin to make this work. Please be patient!!!</p>
+                </div>
+            ) : (
+                <>
+                    <div>
+                        <div className="admin-home-card">
+                            <h5>All Items</h5>
+                            <p>{ItemsCount}</p>
+                            <button onClick={() => navigate('/restaurant-menu')}>View all</button>
+                        </div>
+                    </div>
+                    <div>
+                        <div className="admin-home-card">
+                            <h5>All Orders</h5>
+                            <p>{ordersCount}</p>
+                            <button onClick={() => navigate('/restaurant-orders')}>View all</button>
+                        </div>
+                    </div>
+                    <div>
+                        <div className="admin-home-card">
+                            <h5>Add Item</h5>
+                            <p>(new)</p>
+                            <button onClick={() => navigate('/new-product')}>Add now</button>
+                        </div>
+                    </div>
+                </>
+            )}
         </div>
-      : 
-        <>
-          <div>
-            <div className="admin-home-card">
-              <h5>All Items</h5>
-              <p>{ItemsCount}</p>
-              <button onClick={()=> navigate('/restaurant-menu')}>View all</button>
-            </div>
-          </div>
-
-          <div>
-            <div className="admin-home-card">
-              <h5>All Orders</h5>
-              <p>{ordersCount}</p>
-              <button onClick={()=> navigate('/restaurant-orders')}>View all</button>
-            </div>
-          </div>
-
-          <div>
-            <div className="admin-home-card">
-              <h5>Add Item</h5>
-              <p>(new)</p>
-              <button onClick={()=> navigate('/new-product')}>Add now</button>
-            </div>
-          </div>
-        </>
-      }
-
-      
-
-    </div>
-  )
+    );
 }
 
-export default RestaurantHome
+export default RestaurantHome;

@@ -16,7 +16,7 @@ const Home = () => {
       }, [])
 
     const fetchRestaurants = async() =>{
-        await axios.get('http://localhost:6001/fetch-restaurants').then(
+        await axios.get('http://localhost:3007/fetch-restaurants').then(
           (response)=>{
             setRestaurants(response.data);
           }
@@ -49,7 +49,7 @@ const Home = () => {
         </div>
 
         <div className="home-category-card" onClick={()=>navigate('/category/Burger')}>
-          <img src="https://www.bluecirclefoods.com/cdn/shop/products/Blue_Circle_Salmon_Organic_Burger_1000x.jpg?v=1692122703" alt="" />
+          <img src="https://wpcluster.dctdigital.com/eveningtelegraph/wp-content/uploads/sites/11/2017/01/Cheeseburger-e1485182239507.jpg" alt="" />
           <h5>Burger</h5>
         </div>
 
@@ -94,3 +94,4 @@ const Home = () => {
 }
 
 export default Home
+
