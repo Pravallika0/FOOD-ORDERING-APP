@@ -1,26 +1,41 @@
+import { MongoClient, ServerApiVersion } from 'mongodb';
+import dotenv from 'dotenv';
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://FOOD_APP:<db_password>@cluster0.lz7gz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+// Load environment variables from .env file
+dotenv.config();
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+// MongoDB connection URI from environment variable
+const uri = process.env.DRIVER_LINK;
+
 const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
+    serverApi: ServerApiVersion.v1,
 });
 
-async function run() {
-  try {
-    // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
-  }
+async function connectToDatabase() {
+    try {
+        await client.connect();
+        console.log('Connected to MongoDB Atlas');
+    } catch (err) {
+        console.error('Error connecting to MongoDB:', err);
+    }
 }
-run().catch(console.dir);
+
+// Function to fetch all restaurants
+async function fetchRestaurants() {
+    const dbName = "SBFOODS"; // Your database name
+    const db = client.db(dbName); // Reference to the database
+
+    try {
+        const restaurants = await db.collection("restaurants").find().toArray();
+        return restaurants;
+    } catch (error) {
+        console.error('Error fetching restaurants:', error);
+        throw error; // Rethrow the error for further handling
+    }
+}
+
+// Call the connection function
+connectToDatabase();
+
+// Export the connection function, client, and fetchRestaurants function
+export { connectToDatabase, client, fetchRestaurants };
