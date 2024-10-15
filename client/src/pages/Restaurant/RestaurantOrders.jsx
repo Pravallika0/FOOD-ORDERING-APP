@@ -8,7 +8,7 @@ const RestaurantOrders = () => {
   const username = localStorage.getItem('username');
 
   const fetchOrders = useCallback(async () => {
-    await axios.get('http://localhost:6001/fetch-orders').then(
+    await axios.get('http://localhost:3007/fetch-orders').then(
       (response) => {
         setOrders(response.data.filter(order => order.restaurantName === username).reverse());
       }
@@ -20,7 +20,7 @@ const RestaurantOrders = () => {
   }, [fetchOrders]); // Added fetchOrders to the dependency array
 
   const cancelOrder = async (id) => {
-    await axios.put('http://localhost:6001/cancel-order', { id }).then(
+    await axios.put('http://localhost:3007/cancel-order', { id }).then(
       (response) => {
         alert('Order cancelled!!');
         fetchOrders();
@@ -29,7 +29,7 @@ const RestaurantOrders = () => {
   };
 
   const updateOrderStatus = async (id) => {
-    await axios.put('http://localhost:6001/update-order-status', { id, updateStatus }).then(
+    await axios.put('http://localhost:3007/update-order-status', { id, updateStatus }).then(
       (response) => {
         alert("Order status updated!!");
         setUpdateStatus('');
